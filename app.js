@@ -1,15 +1,20 @@
-const express = require('express');
-const morgan  = require('morgan');
+const express  = require('express');
+const http     = require('http');
+const socketIO = require('socket.io');
 
-const app = express();
+const app    = express();
+const server = http.createServer(app);
+const io     = socketIO(server);
 
-app.use(morgan('dev'));
+io.on('connection', socket => {
+  console.log('client connected');
 
-app.get('/', (req, res) => {
-  res.send('hello world!');
+  socket.on('disconnect', () => {
+    console.log('client disconnected');
+  });
 });
 
-app.listen(3000, (err) => {
+server.listen(3000, err => {
   if (err) return console.log(err);
   console.log('connected to server');
 });
