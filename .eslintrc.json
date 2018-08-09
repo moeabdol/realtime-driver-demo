@@ -49,6 +49,7 @@
     "window": true,
     "io": true,
     "moment": true,
-    "Handlebars": true
+    "Handlebars": true,
+    "google": true
   }
 }

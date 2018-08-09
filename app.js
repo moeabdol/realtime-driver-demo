@@ -18,7 +18,10 @@ io.on('connection', socket => {
   });
 
   socket.on('driverLocationMessage', coords => {
-    io.emit('updatedDriverLocationMessage', coords);
+    io.emit('updatedDriverLocationMessage', {
+      id: socket.client.id,
+      coords
+    });
   });
 });
 
