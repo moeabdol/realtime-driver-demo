@@ -11,23 +11,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 io.on('connection', socket => {
-  console.log('client connected');
-
-  socket.on('driverLocationMessage', coords => {
-    coords = coords.split('&');
-    const lat = coords[0].split('=')[1];
-    const lng = coords[1].split('=')[1];
-
-    console.log('latitude =', lat);
-    console.log('longitude =', lng);
-  });
+  console.log(`client ${socket.client.id} connected`);
 
   socket.on('disconnect', () => {
-    console.log('client disconnected');
+    console.log(`client ${socket.client.id} disconnected`);
+  });
+
+  socket.on('driverLocationMessage', coords => {
+    io.emit('updatedDriverLocationMessage', coords);
   });
 });
 
 server.listen(3000, err => {
   if (err) return console.log(err);
-  console.log('connected to server');
+  console.log('server running on port 3000');
 });
