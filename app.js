@@ -9,6 +9,15 @@ const io     = socketIO(server);
 io.on('connection', socket => {
   console.log('client connected');
 
+  socket.on('driverLocationMessage', coords => {
+    coords = coords.split('&');
+    const lat = coords[0].split('=')[1];
+    const lng = coords[1].split('=')[1];
+
+    console.log('latitude =', lat);
+    console.log('longitude =', lng);
+  });
+
   socket.on('disconnect', () => {
     console.log('client disconnected');
   });
